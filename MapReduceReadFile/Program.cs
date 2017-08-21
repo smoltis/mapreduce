@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace MapReduceReadFile
@@ -13,7 +12,6 @@ namespace MapReduceReadFile
         private const string OutFile = "results.txt";
         static void Main(string[] args)
         {
-            DeleteOldStatsFile();
 
             var sw = System.Diagnostics.Stopwatch.StartNew();
 
@@ -107,7 +105,7 @@ namespace MapReduceReadFile
 
             Console.WriteLine();
             AppendFile(string.Empty);
-            var stats = $"** Done! Time: {time:0:0.000} secs";
+            var stats = $"** Done! Time: {time:0.000} secs";
             Console.WriteLine(stats);
             AppendFile(stats);
             Console.WriteLine();
@@ -144,6 +142,8 @@ namespace MapReduceReadFile
                           select new {StoreName = stores.Value, TotalBaskets = allbaskets.Value};
             Console.WriteLine();
             Console.WriteLine($"** Total count of baskets/transactions by Store");
+            AppendFile(string.Empty);
+            AppendFile($"** Total count of baskets/transactions by Store");
             foreach (var item in baskets.OrderByDescending(p => p.TotalBaskets).ToList())
                 if (!string.IsNullOrEmpty(item.StoreName))
                 {
@@ -259,9 +259,14 @@ namespace MapReduceReadFile
             //
             // Process command-line args to get infile:
             //
+            
             FileInfo fi = new FileInfo(infile);
             double sizeinMb = fi.Length / 1048576.0;
             OutputFolder = fi.DirectoryName;
+            if (OutputFolder != null)
+            {
+                DeleteOldStatsFile();
+            }
             var line = $"** Parallel, MapReduce Data Mining App by Stan Smoltis (c) 2017 [{platform}, {version}] **";
             Console.WriteLine(line);
             AppendFile(line);
@@ -269,6 +274,7 @@ namespace MapReduceReadFile
             Console.Write(line);
             AppendFile(line);
             Console.WriteLine();
+            AppendFile(string.Empty);
         }
     }
 }
