@@ -42,10 +42,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ProductDetailsLine.cs" />
     <Compile Include="SalesStats.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SalesLine.cs" />
+    <Compile Include="StringConstants.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
